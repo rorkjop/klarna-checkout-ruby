@@ -1,10 +1,12 @@
 require 'json'
 require 'klarna/checkout/concerns/has_one'
+require 'klarna/checkout/concerns/has_many'
 
 module Klarna
   module Checkout
     class Resource
       extend HasOne
+      extend HasMany
 
       def initialize(args = {})
         args.each_pair do |attr, value|

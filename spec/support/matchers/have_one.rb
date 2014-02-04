@@ -12,6 +12,6 @@ RSpec::Matchers.define :have_one do |attr_name, options|
   end
 
   failure_message_for_should do |klass|
-    "expected #{klass.inspect} to have association #{attr_name}"
+    "expected #{klass.inspect} to have has_one-association #{attr_name}"
   end
 end
