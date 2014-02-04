@@ -50,6 +50,8 @@ module Klarna
 
           req.body = request_body
         end
+        handle_status_code(response.status)
+
         order.id = response.headers['Location'].split('/').last
         order
       end
@@ -62,6 +64,8 @@ module Klarna
           req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
           req.headers['Accept-Encoding'] = ''
         end
+        handle_status_code(response.status)
+
         Order.new(JSON.parse(response.body))
       end
 

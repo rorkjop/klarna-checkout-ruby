@@ -51,10 +51,12 @@ describe Klarna::Checkout::Client do
 
     let(:order) { double('Order', to_json: JSON.generate({ foo: "bar" }), :id= => true) }
 
-    it "sends a json representation of the object to Klarna" do
+    before(:each) do
       stub_request(:post, "https://checkout.testdrive.klarna.com/checkout/orders")
-        .to_return(headers: { 'Location' => 'https://checkout.testdrive.klarna.com/checkout/orders/143F7BC0A1090B11C39E7220000' })
+        .to_return(headers: { 'Location' => 'https://checkout.testdrive.klarna.com/checkout/orders/143F7BC0A1090B11C39E7220000' }, status: 201)
+    end
 
+    it "sends a json representation of the object to Klarna" do
       subject.create_order(order)
 
       assert_requested :post, "https://checkout.testdrive.klarna.com/checkout/orders",
@@ -66,6 +68,11 @@ describe Klarna::Checkout::Client do
         },
         :body => JSON.generate({ foo: "bar" }),
         :times   => 1
+    end
+
+    it "checks the response" do
+      subject.should receive(:handle_status_code).with(201)
+      subject.create_order(order)
     end
   end
 
@@ -158,10 +165,12 @@ describe Klarna::Checkout::Client do
   describe "#read_order" do
     subject { described_class.new({shared_secret: 'foobar'}) }
 
-    it "uses the correct endpoint at klarna" do
+    before(:each) do
       stub_request(:get, "https://checkout.testdrive.klarna.com/checkout/orders/143F7BC0A1090B11C39E7220000")
         .to_return(body: JSON.generate({ id: "143F7BC0A1090B11C39E7220000" }))
+    end
 
+    it "uses the correct endpoint at klarna" do
       subject.read_order('143F7BC0A1090B11C39E7220000')
 
       assert_requested :get, "https://checkout.testdrive.klarna.com/checkout/orders/143F7BC0A1090B11C39E7220000",
@@ -171,6 +180,11 @@ describe Klarna::Checkout::Client do
           'Authorization'  => 'Klarna w6uP8Tcg6K2QR905Rms8iXTlksL6OD1KOWBxTK7wxPI=',
         },
         :times   => 1
+    end
+
+    it "checks the response" do
+      subject.should receive(:handle_status_code).with(200)
+      subject.read_order('143F7BC0A1090B11C39E7220000')
     end
   end
 
