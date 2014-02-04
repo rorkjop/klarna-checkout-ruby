@@ -5,12 +5,35 @@ require 'faraday'
 module Klarna
   module Checkout
     class Client
-      attr_accessor :shared_secret
+      attr_accessor :shared_secret, :environment
 
       def initialize(args = {})
         args.each do |(k,v)|
           self.public_send("#{k}=", v)
         end        
+      end
+
+      VALID_ENVS = [:test, :production]
+
+      def environment
+        @environment || :test
+      end
+
+      def environment=(new_env)
+        new_env = new_env.to_sym
+        unless VALID_ENVS.include?(new_env)
+          raise "Environment must be one of: #{VALID_ENVS.join(', ')}"
+        end
+
+        @environment = new_env
+      end
+
+      def host
+        if environment == :production
+          'https://checkout.klarna.com'
+        else
+          'https://checkout.testdrive.klarna.com'
+        end
       end
 
       def create_order(order)
@@ -50,7 +73,7 @@ module Klarna
       private
 
       def https_connection
-        @https_connection ||= Faraday.new(url: 'https://checkout.testdrive.klarna.com')
+        @https_connection ||= Faraday.new(url: host)
       end
     end
   end

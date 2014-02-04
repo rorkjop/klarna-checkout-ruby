@@ -12,6 +12,40 @@ describe Klarna::Checkout::Client do
     its(:shared_secret) { should eq 'foobar' }
   end
 
+  describe "#environment" do
+    it "defaults to :test" do
+      subject.environment.should eq :test
+    end
+
+    it "doesn't allow arbitrary values" do
+      expect {
+        subject.environment = :foo
+      }.to raise_error
+    end
+
+    it "accepts strings" do
+      subject.environment = 'test'
+      subject.environment.should eq :test
+
+      subject.environment = 'production'
+      subject.environment.should eq :production
+    end
+  end
+
+  describe "#host" do
+    context "with production environment" do
+      subject { described_class.new({ environment: :production })}
+
+      its(:host) { should eq 'https://checkout.klarna.com' }
+    end
+
+    context "with test environment" do
+      subject { described_class.new({ environment: :test })}
+
+      its(:host) { should eq 'https://checkout.testdrive.klarna.com' }
+    end
+  end
+
   describe "#create_order" do
     subject { described_class.new({shared_secret: 'foobar'}) }
 

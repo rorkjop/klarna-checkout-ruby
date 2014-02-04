@@ -21,7 +21,10 @@ Or install it yourself as:
 ```ruby
 require 'klarna/checkout'
 
-client = Klarna::Checkout::Client.new({ shared_secret: 'your-shared-secret' })
+client = Klarna::Checkout::Client.new({
+  shared_secret: 'your-shared-secret',
+  environment: :test # or :production
+})
 
 # Initialize an order
 order = Klarna::Checkout::Order.new({
