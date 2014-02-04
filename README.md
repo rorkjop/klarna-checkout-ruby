@@ -1,6 +1,6 @@
-# Klarna::Checkout
+# Klarna Checkout
 
-TODO: Write a gem description
+Unofficial Ruby Wrapper for Klarnas Checkout Rest API.
 
 ## Installation
 
@@ -18,7 +18,41 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'klarna/checkout'
+
+client = Klarna::Checkout::Client.new({ shared_secret: 'your-shared-secret' })
+
+# Initialize an order
+order = Klarna::Checkout::Order.new({
+  purchase_country: 'NO',
+  purchase_currency: 'NOK',
+  locale: 'nb-no',
+  cart: {
+    items: [{
+      reference:  '1123581220325',
+      name:       'Widget',
+      quantity:   1,
+      unit_price: 666,
+      tax_rate:   2500
+    }]
+  },
+  merchant: {
+    id: '1337',
+    terms_uri:        'http://www.example.com/terms',
+    checkout_uri:     'http://www.example.com/checkout',
+    confirmation_uri: 'http://www.example.com/confirmation_uri',
+    push_uri:         'http://www.example.com/push'
+  }
+})
+
+# Create the order with Klarna
+client.create_order(order)
+order.id # => will output the ID of the order (no other attributes are updated)
+
+# Read an order from Klarna
+order = client.read_order("1234ABCD")
+```
 
 ## Contributing
 
