@@ -1,4 +1,4 @@
-[![Build Status](https://magnum.travis-ci.com/Skalar/klarna-checkout-ruby.png?token=e2yW3RUEf8aqmbRkK1DS)](https://magnum.travis-ci.com/Skalar/klarna-checkout-ruby)
+[![Build Status](https://magnum.travis-ci.com/Skalar/klarna-checkout-ruby.png?token=e2yW3RUEf8aqmbRkK1DS)](https://magnum.travis-ci.com/Skalar/klarna-checkout-ruby) [![Code Climate](https://codeclimate.com/github/Skalar/klarna-checkout-ruby.png)](https://codeclimate.com/github/Skalar/klarna-checkout-ruby)
 
 # Klarna Checkout
 
