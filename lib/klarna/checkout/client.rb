@@ -2,6 +2,8 @@ require 'digest/sha2'
 require 'base64'
 require 'faraday'
 
+require 'klarna/checkout/exceptions'
+
 module Klarna
   module Checkout
     class Client
@@ -68,6 +70,25 @@ module Klarna
       def sign_payload(request_body = '')
         payload = "#{request_body}#{shared_secret}"
         Digest::SHA256.base64digest(payload)
+      end
+
+      def handle_status_code(code, &blk)
+        case Integer(code)
+        when 200, 201
+          yield if block_given?
+        when 401
+          raise Klarna::Checkout::UnauthorizedException.new
+        when 403
+          raise Klarna::Checkout::ForbiddenException.new
+        when 404
+          raise Klarna::Checkout::NotFoundException.new
+        when 405
+          raise Klarna::Checkout::MethodNotAllowedException.new
+        when 406
+          raise Klarna::Checkout::NotAcceptableException.new
+        when 415
+          raise Klarna::Checkout::UnsupportedMediaTypeException.new
+        end
       end
 
       private
