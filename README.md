@@ -1,3 +1,5 @@
+[![Build Status](https://magnum.travis-ci.com/Skalar/klarna-checkout-ruby.png?token=e2yW3RUEf8aqmbRkK1DS)](https://magnum.travis-ci.com/Skalar/klarna-checkout-ruby)
+
 # Klarna Checkout
 
 Unofficial Ruby Wrapper for Klarnas Checkout Rest API.
