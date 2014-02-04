@@ -18,7 +18,7 @@ describe "creating/reading order" do
         purchase_country: 'NO',
         purchase_currency: 'NOK',
         locale: 'nb-no',
-        cart: Klarna::Checkout::Cart.new({
+        cart: {
           items: [{
             reference:  '1123581220325',
             name:       'Widget',
@@ -26,14 +26,14 @@ describe "creating/reading order" do
             unit_price: 666,
             tax_rate:   2500
           }]
-        }),
-        merchant: Klarna::Checkout::Merchant.new({
+        },
+        merchant: {
           id: '1337',
           terms_uri:        'http://www.example.com/terms',
           checkout_uri:     'http://www.example.com/checkout',
           confirmation_uri: 'http://www.example.com/confirmation_uri',
           push_uri:         'http://www.example.com/push'
-        })
+        }
     end
 
     before(:each) do

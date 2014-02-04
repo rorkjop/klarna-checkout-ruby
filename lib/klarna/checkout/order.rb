@@ -7,20 +7,14 @@ module Klarna
                     :completed_at, :created_at, :last_modified_at, :expires_at,
                     :locale
 
-      attr_accessor :merchant_reference, :purchase_country, :purchase_currency,
-                    :billing_address, :shipping_address, :cart, :customer,
-                    :merchant, :gui
+      attr_accessor :merchant_reference, :purchase_country, :purchase_currency
 
-      def cart=(new_cart)
-        case new_cart
-        when Klarna::Checkout::Cart
-          @cart = new_cart
-        when Hash
-          @cart = Klarna::Checkout::Cart.new(new_cart)
-        else
-          raise "Unsupported type for relation Order#cart: #{new_cart.class.to_s}"
-        end
-      end
+      has_one :billing_address,  Klarna::Checkout::Address
+      has_one :shipping_address, Klarna::Checkout::Address
+      has_one :cart,             Klarna::Checkout::Cart
+      has_one :customer,         Klarna::Checkout::Customer
+      has_one :merchant,         Klarna::Checkout::Merchant
+      has_one :gui,              Klarna::Checkout::Gui
 
       def as_json
         {

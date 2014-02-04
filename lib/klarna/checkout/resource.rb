@@ -1,8 +1,11 @@
 require 'json'
+require 'klarna/checkout/concerns/has_one'
 
 module Klarna
   module Checkout
     class Resource
+      extend HasOne
+
       def initialize(args = {})
         args.each_pair do |attr, value|
           setter = "#{attr.to_s}="

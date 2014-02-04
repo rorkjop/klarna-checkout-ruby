@@ -29,21 +29,12 @@ describe Klarna::Checkout::Order do
   end
 
   describe "relations" do
-    it { should have_one(:billing_address) }
-    it { should have_one(:shipping_address) }
-    it { should have_one(:cart) }
-    it { should have_one(:customer) }
-    it { should have_one(:merchant) }
-    it { should have_one(:gui) }
-
-    describe "setting a relation with a hash" do
-      it "converts the hash into an object" do
-        subject.cart = {
-          items: []
-        }
-        subject.cart.class.should eq Klarna::Checkout::Cart
-      end
-    end
+    it { should have_one(:billing_address,  as: Klarna::Checkout::Address) }
+    it { should have_one(:shipping_address, as: Klarna::Checkout::Address) }
+    it { should have_one(:cart,             as: Klarna::Checkout::Cart) }
+    it { should have_one(:customer,         as: Klarna::Checkout::Customer) }
+    it { should have_one(:merchant,         as: Klarna::Checkout::Merchant) }
+    it { should have_one(:gui,              as: Klarna::Checkout::Gui) }
   end
 
   describe "#as_json" do
@@ -53,7 +44,7 @@ describe Klarna::Checkout::Order do
         purchase_country:   'NO',
         purchase_currency:  'NOK',
         locale: 'nb-no',
-        cart: Klarna::Checkout::Cart.new({
+        cart: {
           items: [{
             reference:  '1123581220325',
             name:       'Widget',
@@ -61,14 +52,14 @@ describe Klarna::Checkout::Order do
             unit_price: 666,
             tax_rate:   2500
           }]
-        }),
-        merchant: double('Merchant', as_json: {
+        },
+        merchant: {
           id: '666666',
           terms_uri:        'http://www.example.com/terms',
           checkout_uri:     'http://www.example.com/checkout',
           confirmation_uri: 'http://www.example.com/confirmation_uri',
           push_uri:         'http://www.example.com/push'
-        })
+        }
     end
 
     let(:json_hash) { order.as_json }
