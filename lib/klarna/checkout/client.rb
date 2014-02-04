@@ -2,6 +2,8 @@ require 'digest/sha2'
 require 'base64'
 require 'faraday'
 
+require 'klarna/checkout/exceptions'
+
 module Klarna
   module Checkout
     class Client
@@ -48,6 +50,8 @@ module Klarna
 
           req.body = request_body
         end
+        handle_status_code(response.status)
+
         order.id = response.headers['Location'].split('/').last
         order
       end
@@ -60,6 +64,8 @@ module Klarna
           req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
           req.headers['Accept-Encoding'] = ''
         end
+        handle_status_code(response.status)
+
         Order.new(JSON.parse(response.body))
       end
 
@@ -68,6 +74,25 @@ module Klarna
       def sign_payload(request_body = '')
         payload = "#{request_body}#{shared_secret}"
         Digest::SHA256.base64digest(payload)
+      end
+
+      def handle_status_code(code, &blk)
+        case Integer(code)
+        when 200, 201
+          yield if block_given?
+        when 401
+          raise Klarna::Checkout::UnauthorizedException.new
+        when 403
+          raise Klarna::Checkout::ForbiddenException.new
+        when 404
+          raise Klarna::Checkout::NotFoundException.new
+        when 405
+          raise Klarna::Checkout::MethodNotAllowedException.new
+        when 406
+          raise Klarna::Checkout::NotAcceptableException.new
+        when 415
+          raise Klarna::Checkout::UnsupportedMediaTypeException.new
+        end
       end
 
       private
