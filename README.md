@@ -54,6 +54,12 @@ order.id # => will output the ID of the order (no other attributes are updated)
 order = client.read_order("1234ABCD")
 ```
 
+## TODO
+
+* Raise exceptions on errors from API
+* Validation of objects according to documentation
+* Respect readonly attributes
+
 ## Contributing
 
 1. Fork it
