@@ -17,16 +17,14 @@ module Klarna
       has_one :gui,              Klarna::Checkout::Gui
 
       def as_json
-        {
+        json_sanitize({
           :merchant_reference => @merchant_reference,
           :purchase_country   => @purchase_country,
           :purchase_currency  => @purchase_currency,
           :locale             => @locale,
           :cart     => @cart.as_json,
           :merchant => @merchant.as_json 
-        }.reject do |k, v|
-          v.nil?
-        end
+        })
       end
     end
   end

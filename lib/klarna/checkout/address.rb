@@ -5,7 +5,7 @@ module Klarna
                     :postal_code, :city, :country, :email, :phone
 
       def as_json
-        {
+        json_sanitize({
           :given_name     => @given_name,
           :family_name    => @family_name,
           :care_of        => @care_of,
@@ -15,7 +15,7 @@ module Klarna
           :country        => @country,
           :email          => @email,
           :phone          => @phone
-        }
+        })
       end
     end
   end

@@ -16,8 +16,12 @@ module Klarna
       end
 
       def to_json
-        sanitized_json = self.as_json.reject { |k, v| v.nil? }
+        sanitized_json = json_sanitize(self.as_json)
         JSON.generate(sanitized_json)
+      end
+
+      def json_sanitize(hash)
+        hash.reject { |k, v| v.nil? }
       end
     end
   end

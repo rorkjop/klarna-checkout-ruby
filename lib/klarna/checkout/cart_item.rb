@@ -6,7 +6,7 @@ module Klarna
                     :total_price_including_tax, :discount_rate, :tax_rate
 
       def as_json
-        {
+        json_sanitize({
           :type => @type,
           :ean => @ean,
           :reference => @reference,
@@ -20,7 +20,7 @@ module Klarna
           :total_price_including_tax => @total_price_including_tax,
           :discount_rate => @discount_rate,
           :tax_rate => @tax_rate
-        }
+        })
       end
     end
   end
