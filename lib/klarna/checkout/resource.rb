@@ -1,4 +1,6 @@
 require 'json'
+
+require 'klarna/hash/deep_merge'
 require 'klarna/checkout/concerns/has_one'
 require 'klarna/checkout/concerns/has_many'
 
@@ -9,7 +11,7 @@ module Klarna
       extend HasMany
 
       def initialize(args = {})
-        self.class.defaults.merge(args).each_pair do |attr, value|
+        self.class.defaults.deep_merge(args).each_pair do |attr, value|
           setter = "#{attr.to_s}="
           self.send(setter, value) if respond_to?(setter)
         end

@@ -104,18 +104,37 @@ describe Klarna::Checkout::Order do
   end
 
   describe ".defaults" do
-    it "allows setting some default values" do
-      described_class.defaults = {
-        purchase_country:   'NO',
-        purchase_currency:  'NOK',
-        merchant: {
-          id: '666666'
+    context "with some defaults set" do
+      before(:each) do
+        described_class.defaults = {
+          purchase_country:   'NO',
+          purchase_currency:  'NOK',
+          merchant: {
+            id: '666666'
+          }
         }
-      }
-      order = described_class.new
+      end
 
-      order.purchase_country.should eq  'NO'
-      order.purchase_currency.should eq 'NOK'
+      it "all new orders have the default values" do
+        order = described_class.new
+        order.purchase_country.should eq  'NO'
+        order.purchase_currency.should eq 'NOK'
+      end
+
+      it "should be possible to override the default values" do
+        order = described_class.new(purchase_currency: 'SEK')
+        order.purchase_currency.should eq 'SEK'
+      end
+
+      it "should be possible to provide any nested values without affecting the defaults" do
+        order = described_class.new({
+          merchant: {
+            terms_uri: 'http://www.example.com/terms'
+          }
+        })
+        order.merchant.id.should eq '666666'
+        order.merchant.terms_uri.should eq 'http://www.example.com/terms'
+      end
     end
 
     it "doesn't allow setting something other than a hash" do
