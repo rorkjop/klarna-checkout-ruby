@@ -10,6 +10,18 @@ describe Klarna::Checkout::Client do
     end
 
     its(:shared_secret) { should eq 'foobar' }
+
+    context "when Klarna::Checkout is configured with a shared_secret" do
+      before(:each) do
+        Klarna::Checkout.configure do |config|
+          config.shared_secret = 'foobar'
+        end
+      end
+
+      it "shouldn't be necessary to provide the secret twice" do
+        described_class.new.shared_secret.should eq 'foobar'
+      end
+    end
   end
 
   describe "#environment" do

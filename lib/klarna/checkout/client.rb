@@ -12,7 +12,8 @@ module Klarna
       def initialize(args = {})
         args.each do |(k,v)|
           self.public_send("#{k}=", v)
-        end        
+        end
+        self.shared_secret ||= Klarna::Checkout.shared_secret
       end
 
       VALID_ENVS = [:test, :production]
