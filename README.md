@@ -73,6 +73,15 @@ order.id
 order = client.read_order("1234ABCD")
 
 
+# Configuring some global variables
+Klarna::Checkout.configure do |config|
+  config.shared_secret = 'your-shared-secret'
+  config.merchant_id   = '12345'
+  config.default_country  = 'NO'
+  config.default_currency = 'NOK'
+end
+
+
 # Instead of repeating yourself with supplying the same attributes for each 
 # order you can configure some default attributes
 Klarna::Checkout::Order.defaults = {

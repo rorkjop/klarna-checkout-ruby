@@ -1,20 +1,14 @@
 module Klarna
   module Checkout
     module Configuration
-      def shared_secret=(shared_secret)
-        @@shared_secret = shared_secret
-      end
+      %w{shared_secret merchant_id default_country default_currency}.each do |var|
+        define_method("#{var}=") do |attr|
+          class_variable_set("@@#{var}".to_sym, attr)
+        end
 
-      def shared_secret
-        @@shared_secret rescue nil
-      end
-
-      def merchant_id=(merchant_id)
-        @@merchant_id = merchant_id
-      end
-
-      def merchant_id
-        @@merchant_id rescue nil
+        define_method(var) do
+          class_variable_get("@@#{var}".to_sym) rescue nil
+        end
       end
 
       def configure(&blk)
@@ -22,8 +16,10 @@ module Klarna
       end
 
       def reset_configuration!
-        @@shared_secret = nil
-        @@merchant_id   = nil
+        self.shared_secret    = nil
+        self.merchant_id      = nil
+        self.default_country  = nil
+        self.default_currency = nil
       end
     end
   end

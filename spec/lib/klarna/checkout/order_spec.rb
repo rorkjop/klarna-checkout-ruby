@@ -166,10 +166,12 @@ describe Klarna::Checkout::Order do
     end
   end
 
-  context "when Klarna::Checkout has been configured with a merchant_id" do
+  context "when Klarna::Checkout has been configured with some default values" do
     before(:each) do
       Klarna::Checkout.configure do |config|
         config.merchant_id = '424242'
+        config.default_country  = 'NO'
+        config.default_currency = 'NOK'
       end
     end
 
@@ -177,23 +179,29 @@ describe Klarna::Checkout::Order do
       Klarna::Checkout.reset_configuration!
     end
 
-    it "should use the merchant_id as default value" do
+    it "should use the configuration's default values" do
       order = described_class.new
-      order.merchant.id.should eq '424242'
+      order.purchase_country.should  eq 'NO'
+      order.purchase_currency.should eq 'NOK'
+      order.merchant.id.should       eq '424242'
     end
 
     context "if I specify another default merchant ID" do
       before(:each) do
         described_class.defaults = {
+          purchase_country:  'SE',
+          purchase_currency: 'SEK',
           merchant: {
             id: '666666'
           }
         }
       end
 
-      it "should use my default value instead" do
+      it "should use my default values instead" do
         order = described_class.new
-        order.merchant.id.should eq '666666'
+        order.purchase_country.should  eq 'SE'
+        order.purchase_currency.should eq 'SEK'
+        order.merchant.id.should       eq '666666'
       end
     end
   end 

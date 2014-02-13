@@ -31,13 +31,13 @@ module Klarna
         def defaults
           defaults = super
 
-          if Klarna::Checkout.merchant_id
-            defaults = {
-              merchant: {
-                id: Klarna::Checkout.merchant_id
-              }
-            }.deep_merge(defaults)
-          end
+          defaults = {
+            purchase_country:  Klarna::Checkout.default_country,
+            purchase_currency: Klarna::Checkout.default_currency,
+            merchant: {
+              id: Klarna::Checkout.merchant_id
+            }
+          }.deep_merge(defaults)
 
           defaults
         end
