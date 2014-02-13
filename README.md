@@ -53,10 +53,31 @@ order = Klarna::Checkout::Order.new({
 
 # Create the order with Klarna
 client.create_order(order)
-order.id # => will output the ID of the order (no other attributes are updated)
+order.id
+# => ID of the order (no other attributes are updated)
 
 # Read an order from Klarna
 order = client.read_order("1234ABCD")
+
+# Instead of repeating yourself with supplying the same attributes for each 
+# order you can configure some default attributes
+Klarna::Checkout::Order.defaults = {
+  purchase_country: 'NO',
+  purchase_currency: 'NOK',
+  locale: 'nb-no',
+  merchant: {
+    id: '1337',
+    terms_uri:        'http://www.example.com/terms',
+    checkout_uri:     'http://www.example.com/checkout',
+    confirmation_uri: 'http://www.example.com/confirmation_uri',
+    push_uri:         'http://www.example.com/push'
+  }
+}
+
+# All newly created orders will then have these attributes
+order = Klarna::Checkout::Order.new
+order.purchase_country
+# => 'NO'
 ```
 
 ## TODO
