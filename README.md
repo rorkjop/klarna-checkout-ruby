@@ -23,10 +23,21 @@ Or install it yourself as:
 ```ruby
 require 'klarna/checkout'
 
+# a) Create a client with shared_secret directly
 client = Klarna::Checkout::Client.new({
   shared_secret: 'your-shared-secret',
   environment: :test # or :production
 })
+
+# b) Create a client with shared_secret from module configuration
+Klarna::Checkout.configure do |config|
+  config.shared_secret = 'your-shared-secret'
+end
+
+client = Klarna::Checkout::Client.new(environment: :test)
+client.shared_secret
+# => 'your-shared-secret'
+
 
 # Initialize an order
 order = Klarna::Checkout::Order.new({
@@ -51,13 +62,16 @@ order = Klarna::Checkout::Order.new({
   }
 })
 
+
 # Create the order with Klarna
 client.create_order(order)
 order.id
 # => ID of the order (no other attributes are updated)
 
+
 # Read an order from Klarna
 order = client.read_order("1234ABCD")
+
 
 # Instead of repeating yourself with supplying the same attributes for each 
 # order you can configure some default attributes
