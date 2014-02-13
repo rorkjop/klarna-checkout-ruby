@@ -9,7 +9,7 @@ module Klarna
       extend HasMany
 
       def initialize(args = {})
-        args.each_pair do |attr, value|
+        self.class.defaults.merge(args).each_pair do |attr, value|
           setter = "#{attr.to_s}="
           self.send(setter, value) if respond_to?(setter)
         end
@@ -22,6 +22,18 @@ module Klarna
 
       def json_sanitize(hash)
         hash.reject { |k, v| v.nil? }
+      end
+
+      class << self
+        def defaults=(hash)
+          raise ArgumentError.new unless hash.is_a? Hash
+
+          @defaults = hash
+        end
+
+        def defaults
+          @defaults || {}
+        end
       end
     end
   end

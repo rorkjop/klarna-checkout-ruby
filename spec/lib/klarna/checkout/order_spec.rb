@@ -102,4 +102,26 @@ describe Klarna::Checkout::Order do
       subject.to_json.should eq JSON.generate({ bar: "foo" })
     end
   end
+
+  describe ".defaults" do
+    it "allows setting some default values" do
+      described_class.defaults = {
+        purchase_country:   'NO',
+        purchase_currency:  'NOK',
+        merchant: {
+          id: '666666'
+        }
+      }
+      order = described_class.new
+
+      order.purchase_country.should eq  'NO'
+      order.purchase_currency.should eq 'NOK'
+    end
+
+    it "doesn't allow setting something other than a hash" do
+      expect {
+        described_class.defaults = :foobar  
+      }.to raise_error(ArgumentError)
+    end
+  end
 end
