@@ -30,7 +30,8 @@ module Klarna
         def defaults=(hash)
           raise ArgumentError.new unless hash.is_a? Hash
 
-          @defaults = hash
+          @defaults ||= {}
+          @defaults.deep_merge!(hash)
         end
 
         def defaults

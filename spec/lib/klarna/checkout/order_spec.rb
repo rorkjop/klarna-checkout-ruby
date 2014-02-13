@@ -135,6 +135,25 @@ describe Klarna::Checkout::Order do
         order.merchant.id.should eq '666666'
         order.merchant.terms_uri.should eq 'http://www.example.com/terms'
       end
+
+      context "when I override an already specified default value" do
+        before(:each) do
+          described_class.defaults = {
+            purchase_currency: 'SEK'
+          }
+        end
+
+        it "newly created objects should use the new default value" do
+          order = described_class.new
+          order.purchase_currency.should eq 'SEK'
+        end
+
+        it "shouldn't remove the old default values" do
+          order = described_class.new
+          order.purchase_country.should eq  'NO'
+          order.merchant.id.should eq '666666'
+        end
+      end
     end
 
     it "doesn't allow setting something other than a hash" do
