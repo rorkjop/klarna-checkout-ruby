@@ -18,3 +18,6 @@ end
 
 class Klarna::Checkout::UnsupportedMediaTypeException < Klarna::Checkout::Exception
 end
+
+class Klarna::Checkout::InternalServerErrorException < Klarna::Checkout::Exception
+end

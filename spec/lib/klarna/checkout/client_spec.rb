@@ -160,6 +160,14 @@ describe Klarna::Checkout::Client do
         }.to raise_error(Klarna::Checkout::UnsupportedMediaTypeException)
       end
     end
+
+    context "with 500" do
+      it "raises a Klarna::Checkout::InternalServerErrorException" do
+        expect {
+          subject.handle_status_code(500)
+        }.to raise_error(Klarna::Checkout::InternalServerErrorException)
+      end
+    end
   end
 
   describe "#read_order" do

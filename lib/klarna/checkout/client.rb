@@ -92,6 +92,8 @@ module Klarna
           raise Klarna::Checkout::NotAcceptableException.new
         when 415
           raise Klarna::Checkout::UnsupportedMediaTypeException.new
+        when 500
+          raise Klarna::Checkout::InternalServerErrorException.new
         end
       end
 
