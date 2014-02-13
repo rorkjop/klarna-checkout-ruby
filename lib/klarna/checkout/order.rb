@@ -26,6 +26,22 @@ module Klarna
           :merchant => @merchant.as_json 
         })
       end
+
+      class << self
+        def defaults
+          defaults = super
+
+          if Klarna::Checkout.merchant_id
+            defaults = {
+              merchant: {
+                id: Klarna::Checkout.merchant_id
+              }
+            }.deep_merge(defaults)
+          end
+
+          defaults
+        end
+      end
     end
   end
 end

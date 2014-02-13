@@ -165,4 +165,36 @@ describe Klarna::Checkout::Order do
       }.to raise_error(ArgumentError)
     end
   end
+
+  context "when Klarna::Checkout has been configured with a merchant_id" do
+    before(:each) do
+      Klarna::Checkout.configure do |config|
+        config.merchant_id = '424242'
+      end
+    end
+
+    after(:each) do
+      Klarna::Checkout.reset_configuration!
+    end
+
+    it "should use the merchant_id as default value" do
+      order = described_class.new
+      order.merchant.id.should eq '424242'
+    end
+
+    context "if I specify another default merchant ID" do
+      before(:each) do
+        described_class.defaults = {
+          merchant: {
+            id: '666666'
+          }
+        }
+      end
+
+      it "should use my default value instead" do
+        order = described_class.new
+        order.merchant.id.should eq '666666'
+      end
+    end
+  end 
 end
