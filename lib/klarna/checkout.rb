@@ -1,5 +1,6 @@
 require "klarna/checkout/version"
 require "klarna/checkout/client"
+require "klarna/checkout/configuration"
 
 require "klarna/checkout/resource"
 
@@ -12,6 +13,6 @@ require "klarna/checkout/order"
 
 module Klarna
   module Checkout
-    # Your code goes here...
+    extend Klarna::Checkout::Configuration
   end
 end
