@@ -18,6 +18,10 @@ describe Klarna::Checkout::Client do
         end
       end
 
+      after(:each) do
+        Klarna::Checkout.reset_configuration!
+      end
+
       it "shouldn't be necessary to provide the secret twice" do
         described_class.new.shared_secret.should eq 'foobar'
       end
