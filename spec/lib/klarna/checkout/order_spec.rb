@@ -114,6 +114,9 @@ describe Klarna::Checkout::Order do
           }
         }
       end
+      after(:each) do
+        described_class.defaults = nil
+      end
 
       it "all new orders have the default values" do
         order = described_class.new

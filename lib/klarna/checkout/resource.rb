@@ -28,10 +28,14 @@ module Klarna
 
       class << self
         def defaults=(hash)
-          raise ArgumentError.new unless hash.is_a? Hash
+          if hash
+            raise ArgumentError.new unless hash.is_a? Hash
 
-          @defaults ||= {}
-          @defaults.deep_merge!(hash)
+            @defaults ||= {}
+            @defaults.deep_merge!(hash)
+          else
+            @defaults = {}
+          end
         end
 
         def defaults
