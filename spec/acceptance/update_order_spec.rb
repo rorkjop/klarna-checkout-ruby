@@ -9,7 +9,7 @@ describe "updating existing order" do
 
   let(:client) do
     Klarna::Checkout::Client.new \
-      shared_secret: 'dhd1CwWIVrZSp1O'
+      shared_secret: 'foobar'
   end
 
   let(:order) { client.read_order('1445FB9ACFD90B11C39E7220000') }

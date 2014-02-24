@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.0
       Authorization:
-      - Klarna QewkVlXa+6xDGNlS6yCgnKFKAZcJ/HAL+ocIwktB2K0=
+      - Klarna gone
       Accept:
       - application/vnd.klarna.checkout.aggregated-order-v2+json
       Accept-Encoding:
@@ -41,7 +41,7 @@ http_interactions:
         <![CDATA[ */(function(w,k,i,d,u,n,c){w[k]=w[k]||function(){(w[k].q=w[k].q||[]).push(arguments)};w[k].config={container:w.document.getElementById(i),ORDER_URL:''https://checkout.testdrive.klarna.com/checkout/orders/1445FB9ACFD90B11C39E7220000'',TESTDRIVE:true,AUTH_HEADER:''KlarnaCheckout
         aQdfgpMjeNNvH3JorWv3'',LAYOUT:''desktop'',LOCALE:''nb-no'',ORDER_STATUS:''checkout_incomplete'',MERCHANT_TAC_URI:''http://www.example.com/terms'',MERCHANT_TAC_TITLE:''R\u00f8rkj\u00f8p
         KCO'',MERCHANT_NAME:''R\u00f8rkj\u00f8p KCO'',GUI_OPTIONS:[],ALLOW_SEPARATE_SHIPPING_ADDRESS:false,PURCHASE_COUNTRY:''nor'',PURCHASE_CURRENCY:''nok'',DISALLOW_SKIP_NIN:false,BOOTSTRAP_SRC:u};n=d.createElement(''script'');c=d.getElementById(i);n.async=!0;n.src=u;c.insertBefore(n,c.firstChild);})(this,''_klarnaCheckout'',''klarna-checkout-container'',document,''https://checkout.testdrive.klarna.com/140218-2318fcb/checkout.bootstrap.js'');/*
-        ]]> */</script><noscript>Please <a href=\"http://enable-javascript.com\">enable\nJavaScript</a>.</noscript></div>"},"options":{"allow_separate_shipping_address":false},"merchant":{"id":"1667","terms_uri":"http://www.example.com/terms","checkout_uri":"http://www.example.com/checkout","confirmation_uri":"http://www.example.com/confirmation_uri","push_uri":"http://www.example.com/push"}}'
+        ]]> */</script><noscript>Please <a href=\"http://enable-javascript.com\">enable\nJavaScript</a>.</noscript></div>"},"options":{"allow_separate_shipping_address":false},"merchant":{"id":"1337","terms_uri":"http://www.example.com/terms","checkout_uri":"http://www.example.com/checkout","confirmation_uri":"http://www.example.com/confirmation_uri","push_uri":"http://www.example.com/push"}}'
     http_version: 
   recorded_at: Mon, 24 Feb 2014 10:57:04 GMT
 recorded_with: VCR 2.8.0
