@@ -65,7 +65,7 @@ describe Klarna::Checkout::Client do
   describe "#create_order" do
     subject { described_class.new({shared_secret: 'foobar'}) }
 
-    let(:order) { double('Order', to_json: JSON.generate({ foo: "bar" }), :id= => true, valid?: true) }
+    let(:order) { double('Order', to_json: JSON.generate({ foo: "bar" }), id: nil, :id= => true, valid?: true) }
 
     before(:each) do
       stub_request(:post, "https://checkout.testdrive.klarna.com/checkout/orders")

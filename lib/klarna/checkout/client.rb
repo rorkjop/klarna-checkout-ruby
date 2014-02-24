@@ -42,19 +42,7 @@ module Klarna
       def create_order(order)
         return false unless order.valid?
 
-        request_body = order.to_json
-        response = https_connection.post do |req|
-          req.url '/checkout/orders'
-
-          req.headers['Authorization']   = "Klarna #{sign_payload(request_body)}"
-          req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json',
-          req.headers['Content-Type']    = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
-          req.headers['Accept-Encoding'] = ''
-
-          req.body = request_body
-        end
-        handle_status_code(response.status)
-
+        response = write_order(order)
         order.id = response.headers['Location'].split('/').last
         order
       end
@@ -75,19 +63,7 @@ module Klarna
       def update_order(order)
         return false unless order.valid?
 
-        request_body = order.to_json
-        response = https_connection.post do |req|
-          req.url "/checkout/orders/#{order.id}"
-
-          req.headers['Authorization']   = "Klarna #{sign_payload(request_body)}"
-          req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json',
-          req.headers['Content-Type']    = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
-          req.headers['Accept-Encoding'] = ''
-
-          req.body = request_body
-        end
-        handle_status_code(response.status)
-
+        response = write_order(order)
         Order.new(JSON.parse(response.body))
       end
 
@@ -120,6 +96,25 @@ module Klarna
       end
 
       private
+
+      def write_order(order)
+        path  = "/checkout/orders"
+        path += "/#{order.id}" if order.id
+
+        request_body = order.to_json
+        response = https_connection.post do |req|
+          req.url path
+
+          req.headers['Authorization']   = "Klarna #{sign_payload(request_body)}"
+          req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json',
+          req.headers['Content-Type']    = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
+          req.headers['Accept-Encoding'] = ''
+
+          req.body = request_body
+        end
+        handle_status_code(response.status)
+        response
+      end
 
       def https_connection
         @https_connection ||= Faraday.new(url: host)
