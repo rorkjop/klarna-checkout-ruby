@@ -1,4 +1,5 @@
 require 'json'
+require 'active_support/core_ext/hash/slice'
 
 require 'klarna/hash/deep_merge'
 require 'klarna/checkout/concerns/has_one'
@@ -17,13 +18,15 @@ module Klarna
         end
       end
 
-      def to_json
-        sanitized_json = json_sanitize(self.as_json)
+      def to_json(*keys)
+        sanitized_json = json_sanitize(self.as_json, keys)
         JSON.generate(sanitized_json)
       end
 
-      def json_sanitize(hash)
-        hash.reject { |k, v| v.nil? }
+      def json_sanitize(hash, keys = [])
+        hash.reject! { |k, v| v.nil? }
+        hash.slice!(*Array(keys)) if keys.any?
+        hash
       end
 
       class << self

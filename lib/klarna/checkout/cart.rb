@@ -10,9 +10,6 @@ module Klarna
 
       def as_json
         json_sanitize({
-          :total_price_including_tax => @total_price_including_tax,
-          :total_price_excluding_tax => @total_price_excluding_tax,
-          :total_tax_amount => @total_tax_amount,
           :items => @items.map(&:as_json)
         })
       end

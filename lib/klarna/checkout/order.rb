@@ -19,7 +19,7 @@ module Klarna
 
       def as_json
         json_sanitize({
-          :merchant_reference => @merchant_reference,
+          :merchant_reference => (@merchant_reference && @merchant_reference.as_json),
           :purchase_country   => @purchase_country,
           :purchase_currency  => @purchase_currency,
           :locale             => @locale,

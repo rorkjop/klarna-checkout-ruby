@@ -15,9 +15,6 @@ module Klarna
           :image_uri => @image_uri,
           :quantity => @quantity,
           :unit_price => @unit_price,
-          :total_price_excluding_tax => @total_price_excluding_tax,
-          :total_tax_amount => @total_tax_amount,
-          :total_price_including_tax => @total_price_including_tax,
           :discount_rate => @discount_rate,
           :tax_rate => @tax_rate
         })
