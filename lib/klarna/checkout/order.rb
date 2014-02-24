@@ -1,8 +1,11 @@
 require 'json'
+require 'active_model'
 
 module Klarna
   module Checkout
     class Order < Resource
+      include ActiveModel::Validations
+
       attr_accessor :id, :status, :reference, :reservation, :started_at,
                     :completed_at, :created_at, :last_modified_at, :expires_at,
                     :locale
@@ -17,6 +20,10 @@ module Klarna
       has_one :merchant,            Klarna::Checkout::Merchant
       has_one :gui,                 Klarna::Checkout::Gui
 
+      validates_presence_of :purchase_country, :purchase_currency, :locale
+      validate :merchant_validation
+      validate :cart_validation
+
       def as_json
         json_sanitize({
           :merchant_reference => (@merchant_reference && @merchant_reference.as_json),
@@ -26,6 +33,16 @@ module Klarna
           :cart     => @cart.as_json,
           :merchant => @merchant.as_json 
         })
+      end
+
+      private
+
+      def merchant_validation
+        errors.add(:merchant, :invalid) unless merchant.valid?
+      end
+
+      def cart_validation
+        errors.add(:cart, :invalid) unless cart.valid?
       end
 
       class << self

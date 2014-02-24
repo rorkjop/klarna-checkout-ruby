@@ -37,6 +37,121 @@ describe Klarna::Checkout::Order do
     it { should have_one(:gui,                as: Klarna::Checkout::Gui) }
   end
 
+  describe "validations" do
+    subject(:valid_order) do
+      described_class.new \
+        merchant_reference: {
+          orderid1: 'foo',
+          orderid2: 'bar'
+        },
+        purchase_country:   'NO',
+        purchase_currency:  'NOK',
+        locale: 'nb-no',
+        cart: {
+          items: [{
+            reference:  '1123581220325',
+            name:       'Widget',
+            quantity:   1,
+            unit_price: 666,
+            tax_rate:   2500
+          }]
+        },
+        merchant: {
+          id: '666666',
+          terms_uri:        'http://www.example.com/terms',
+          checkout_uri:     'http://www.example.com/checkout',
+          confirmation_uri: 'http://www.example.com/confirmation_uri',
+          push_uri:         'http://www.example.com/push'
+        }
+    end
+
+    it { should be_valid }
+
+    context "when status is 'checkout_incomplete'" do
+      before(:each) do
+        subject.status = 'checkout_incomplete'
+      end
+
+      it "is invalid without a purchase country" do
+        subject.purchase_country = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a purchase currency" do
+        subject.purchase_currency = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a locale" do
+        subject.locale = nil
+        subject.should_not be_valid
+      end
+
+      let(:cart_item) { subject.cart.items[0] }
+
+      it "is invalid without a cart item reference" do
+        cart_item.reference = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a cart item name" do
+        cart_item.name = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a cart item quantity" do
+        cart_item.quantity = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a cart item unit price" do
+        cart_item.unit_price = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a cart item tax rate" do
+        cart_item.tax_rate = nil
+        subject.should_not be_valid
+      end
+
+      let(:merchant) { subject.merchant }
+
+      it "is invalid without a merchant id" do
+        merchant.id = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a merchant terms_uri" do
+        merchant.terms_uri = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a merchant checkout_uri" do
+        merchant.checkout_uri = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a merchant confirmation_uri" do
+        merchant.confirmation_uri = nil
+        subject.should_not be_valid
+      end
+
+      it "is invalid without a merchant push_uri" do
+        merchant.push_uri = nil
+        subject.should_not be_valid
+      end
+    end
+
+    context "when status is 'checkout_complete' or 'created'" do
+      ['checkout_complete', 'created'].each do |status|
+        before(:each) do
+          subject.status = 'checkout_complete'
+        end
+
+      end
+    end
+  end
+
   describe "#as_json" do
     let(:order) do
       described_class.new \
