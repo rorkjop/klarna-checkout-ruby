@@ -1,7 +1,7 @@
 require 'json'
 require 'active_support/core_ext/hash/slice'
+require 'active_support/core_ext/hash/deep_merge'
 
-require 'klarna/hash/deep_merge'
 require 'klarna/checkout/concerns/has_one'
 require 'klarna/checkout/concerns/has_many'
 
