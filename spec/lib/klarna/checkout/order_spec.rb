@@ -14,7 +14,6 @@ describe Klarna::Checkout::Order do
 
   describe "attributes" do
     it { should have_attribute(:id) } #,                 :readonly)  }
-    it { should have_attribute(:merchant_reference) } #, :optional)  }
     it { should have_attribute(:purchase_country) } #,   :mandatory) }
     it { should have_attribute(:purchase_currency) } #,  :mandatory) }
     it { should have_attribute(:locale) } #,             :mandatory) }
@@ -29,18 +28,22 @@ describe Klarna::Checkout::Order do
   end
 
   describe "relations" do
-    it { should have_one(:billing_address,  as: Klarna::Checkout::Address) }
-    it { should have_one(:shipping_address, as: Klarna::Checkout::Address) }
-    it { should have_one(:cart,             as: Klarna::Checkout::Cart) }
-    it { should have_one(:customer,         as: Klarna::Checkout::Customer) }
-    it { should have_one(:merchant,         as: Klarna::Checkout::Merchant) }
-    it { should have_one(:gui,              as: Klarna::Checkout::Gui) }
+    it { should have_one(:merchant_reference, as: Klarna::Checkout::MerchantReference) }
+    it { should have_one(:billing_address,    as: Klarna::Checkout::Address) }
+    it { should have_one(:shipping_address,   as: Klarna::Checkout::Address) }
+    it { should have_one(:cart,               as: Klarna::Checkout::Cart) }
+    it { should have_one(:customer,           as: Klarna::Checkout::Customer) }
+    it { should have_one(:merchant,           as: Klarna::Checkout::Merchant) }
+    it { should have_one(:gui,                as: Klarna::Checkout::Gui) }
   end
 
   describe "#as_json" do
     let(:order) do
       described_class.new \
-        merchant_reference: 'foo',
+        merchant_reference: {
+          orderid1: 'foo',
+          orderid2: 'bar'
+        },
         purchase_country:   'NO',
         purchase_currency:  'NOK',
         locale: 'nb-no',
@@ -67,7 +70,13 @@ describe Klarna::Checkout::Order do
       json_hash
     end
 
-    its([:merchant_reference]) { should eq 'foo' }
+    describe "merchant_reference" do
+      subject { json_hash[:merchant_reference] }
+
+      its([:orderid1]) { 'foo' }
+      its([:orderid2]) { 'bar' }
+    end
+
     its([:purchase_country])   { should eq 'NO' }
     its([:purchase_currency])  { should eq 'NOK' }
     its([:locale])             { should eq 'nb-no' }

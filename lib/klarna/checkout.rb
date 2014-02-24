@@ -9,6 +9,7 @@ require "klarna/checkout/cart"
 require "klarna/checkout/customer"
 require "klarna/checkout/gui"
 require "klarna/checkout/merchant"
+require "klarna/checkout/merchant_reference"
 require "klarna/checkout/order"
 
 module Klarna

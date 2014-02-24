@@ -70,6 +70,23 @@ module Klarna
         Order.new(JSON.parse(response.body))
       end
 
+      def update_order(order)
+        request_body = order.to_json
+        response = https_connection.post do |req|
+          req.url "/checkout/orders/#{order.id}"
+
+          req.headers['Authorization']   = "Klarna #{sign_payload(request_body)}"
+          req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json',
+          req.headers['Content-Type']    = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
+          req.headers['Accept-Encoding'] = ''
+
+          req.body = request_body
+        end
+        handle_status_code(response.status)
+
+        Order.new(JSON.parse(response.body))
+      end
+
       # Based on example from:
       # http://developers.klarna.com/en/api-references-v1/klarna-checkout#authorization
       def sign_payload(request_body = '')

@@ -39,10 +39,6 @@ describe Klarna::Checkout::Cart do
       json_hash
     end
 
-    its([:total_price_including_tax]) { should eq 250 }
-    its([:total_price_excluding_tax]) { should eq 200 }
-    its([:total_tax_amount])          { should eq 50 }
-
     describe "items/0" do
       subject { json_hash[:items][0] }
 
@@ -54,9 +50,6 @@ describe Klarna::Checkout::Cart do
       its([:image_uri])                 { should eq 'http://www.example.com/product-image-uri' }              
       its([:quantity])                  { should eq 1 }              
       its([:unit_price])                { should eq 250 }                
-      its([:total_price_excluding_tax]) { should eq 200 }
-      its([:total_tax_amount])          { should eq 50 }
-      its([:total_price_including_tax]) { should eq 250 }
       its([:discount_rate])             { should eq 0 }
       its([:tax_rate])                  { should eq 2500 }
     end

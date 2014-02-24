@@ -212,6 +212,34 @@ describe Klarna::Checkout::Client do
     end
   end
 
+  describe "#update_order" do
+    subject { described_class.new({shared_secret: 'foobar'}) }
+    let(:order) { double('Order', to_json: JSON.generate({ foo: "bar" }), :id => "143F7BC0A1090B11C39E7220000") }
+
+    before(:each) do
+      stub_request(:post, "https://checkout.testdrive.klarna.com/checkout/orders/143F7BC0A1090B11C39E7220000")
+        .to_return(status: 200, body: JSON.generate({ id: "143F7BC0A1090B11C39E7220000" }))
+    end
+
+    it "uses the correct endpoint at klarna" do
+      subject.update_order(order)
+
+      assert_requested :post, "https://checkout.testdrive.klarna.com/checkout/orders/143F7BC0A1090B11C39E7220000",
+        :headers => {
+          # TODO: Investigate double definition in header
+          # 'Accept' => 'application/vnd.klarna.checkout.aggregated-order-v2+json',
+          'Authorization'  => 'Klarna dM+worqeBUs4UrOB3Jr/jSZWI39vP4LNw7NfDjGtW2w=',
+          'Content-Type'   => 'application/vnd.klarna.checkout.aggregated-order-v2+json',
+        },
+        :times   => 1
+    end
+
+    it "checks the response" do
+      subject.should receive(:handle_status_code).with(200)
+      subject.update_order(order)
+    end
+  end
+
   describe "#sign_payload" do
     let(:client) { described_class.new(shared_secret: 'foobar') }
 
