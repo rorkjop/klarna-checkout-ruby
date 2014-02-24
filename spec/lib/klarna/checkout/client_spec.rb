@@ -65,7 +65,7 @@ describe Klarna::Checkout::Client do
   describe "#create_order" do
     subject { described_class.new({shared_secret: 'foobar'}) }
 
-    let(:order) { double('Order', to_json: JSON.generate({ foo: "bar" }), :id= => true) }
+    let(:order) { double('Order', to_json: JSON.generate({ foo: "bar" }), :id= => true, valid?: true) }
 
     before(:each) do
       stub_request(:post, "https://checkout.testdrive.klarna.com/checkout/orders")
@@ -89,6 +89,22 @@ describe Klarna::Checkout::Client do
     it "checks the response" do
       subject.should receive(:handle_status_code).with(201)
       subject.create_order(order)
+    end
+
+    it "returns the order" do
+      return_value = subject.create_order(order)
+      return_value.should eq order
+    end
+
+    context "if the order is invalid" do
+      before(:each) do
+        order.stub(:valid?) { false }
+      end
+
+      it "returns a falsy value" do
+        return_value = subject.create_order(order)
+        return_value.should be_false
+      end
     end
   end
 
@@ -214,7 +230,7 @@ describe Klarna::Checkout::Client do
 
   describe "#update_order" do
     subject { described_class.new({shared_secret: 'foobar'}) }
-    let(:order) { double('Order', to_json: JSON.generate({ foo: "bar" }), :id => "143F7BC0A1090B11C39E7220000") }
+    let(:order) { double('Order', to_json: JSON.generate({ foo: "bar" }), :id => "143F7BC0A1090B11C39E7220000", valid?: true) }
 
     before(:each) do
       stub_request(:post, "https://checkout.testdrive.klarna.com/checkout/orders/143F7BC0A1090B11C39E7220000")
@@ -237,6 +253,22 @@ describe Klarna::Checkout::Client do
     it "checks the response" do
       subject.should receive(:handle_status_code).with(200)
       subject.update_order(order)
+    end
+
+    it "returns an order" do
+      return_value = subject.update_order(order)
+      return_value.should be_kind_of(Klarna::Checkout::Order)
+    end
+
+    context "if the order is invalid" do
+      before(:each) do
+        order.stub(:valid?) { false }
+      end
+
+      it "returns a falsy value" do
+        return_value = subject.update_order(order)
+        return_value.should be_false
+      end
     end
   end
 

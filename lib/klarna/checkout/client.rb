@@ -40,6 +40,8 @@ module Klarna
       end
 
       def create_order(order)
+        return false unless order.valid?
+
         request_body = order.to_json
         response = https_connection.post do |req|
           req.url '/checkout/orders'
@@ -71,6 +73,8 @@ module Klarna
       end
 
       def update_order(order)
+        return false unless order.valid?
+
         request_body = order.to_json
         response = https_connection.post do |req|
           req.url "/checkout/orders/#{order.id}"
