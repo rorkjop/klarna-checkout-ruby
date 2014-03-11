@@ -1,4 +1,4 @@
-## wip
+## Version 1.0.1
 
 * Fix bug with assigning `[]` to `Cart#items`
 
