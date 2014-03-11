@@ -5,6 +5,12 @@ module HasMany
     define_method "#{association}=" do |new_value|
       new_value = Array(new_value)
       inst_var = "@#{association}"
+
+      if new_value.empty?
+        instance_variable_set(inst_var, [])
+        return
+      end
+
       case new_value.first
       when klass
         instance_variable_set(inst_var, new_value)

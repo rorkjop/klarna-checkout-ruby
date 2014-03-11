@@ -11,6 +11,14 @@ describe Klarna::Checkout::Cart do
     it { should have_many(:items,  as: Klarna::Checkout::CartItem) }
   end
 
+  describe "emptying the cart" do
+    before(:each) do
+      subject.items = []
+    end
+
+    its(:items) { should eq [] }
+  end
+
   describe "#as_json" do
     let(:cart) do
       described_class.new \
