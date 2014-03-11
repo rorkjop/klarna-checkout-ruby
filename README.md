@@ -108,6 +108,13 @@ order.purchase_country
 * Validation of objects according to documentation
 * Respect readonly attributes
 
+## Supported Rubies
+
+* 1.9.2
+* 1.9.3
+* 2.0.0
+* 2.1.0
+
 ## Contributing
 
 1. Fork it
