@@ -1,3 +1,13 @@
+## wip
+
+* Fix bug with assigning `[]` to `Cart#items`
+
+## Version 1.0.0
+
+* Inherit exceptions from StandardError
+* Refactored `Client`-class
+* Removed custom `deep_merge`-ext
+
 ## Version 0.0.6
 
 * Client-side validations
