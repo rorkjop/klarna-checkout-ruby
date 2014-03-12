@@ -55,7 +55,7 @@ module Klarna
           req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
           req.headers['Accept-Encoding'] = ''
         end
-        handle_status_code(response.status)
+        handle_status_code(response.status, response.body)
 
         Order.new(JSON.parse(response.body))
       end
@@ -74,24 +74,24 @@ module Klarna
         Digest::SHA256.base64digest(payload)
       end
 
-      def handle_status_code(code, &blk)
+      def handle_status_code(code, msg = nil, &blk)
         case Integer(code)
         when 200, 201
           yield if block_given?
         when 401
-          raise Klarna::Checkout::UnauthorizedException.new
+          raise Klarna::Checkout::UnauthorizedException.new(msg)
         when 403
-          raise Klarna::Checkout::ForbiddenException.new
+          raise Klarna::Checkout::ForbiddenException.new(msg)
         when 404
-          raise Klarna::Checkout::NotFoundException.new
+          raise Klarna::Checkout::NotFoundException.new(msg)
         when 405
-          raise Klarna::Checkout::MethodNotAllowedException.new
+          raise Klarna::Checkout::MethodNotAllowedException.new(msg)
         when 406
-          raise Klarna::Checkout::NotAcceptableException.new
+          raise Klarna::Checkout::NotAcceptableException.new(msg)
         when 415
-          raise Klarna::Checkout::UnsupportedMediaTypeException.new
+          raise Klarna::Checkout::UnsupportedMediaTypeException.new(msg)
         when 500
-          raise Klarna::Checkout::InternalServerErrorException.new
+          raise Klarna::Checkout::InternalServerErrorException.new(msg)
         end
       end
 
@@ -112,7 +112,7 @@ module Klarna
 
           req.body = request_body
         end
-        handle_status_code(response.status)
+        handle_status_code(response.status, response.body)
         response
       end
 

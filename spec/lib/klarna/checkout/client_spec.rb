@@ -87,7 +87,7 @@ describe Klarna::Checkout::Client do
     end
 
     it "checks the response" do
-      subject.should receive(:handle_status_code).with(201)
+      subject.should receive(:handle_status_code).with(201, '')
       subject.create_order(order)
     end
 
@@ -150,6 +150,16 @@ describe Klarna::Checkout::Client do
         expect {
           subject.handle_status_code(401)  
         }.to raise_error(Klarna::Checkout::UnauthorizedException)
+      end
+
+      describe "handling status code with a message" do
+        it "has a message" do
+          begin
+            subject.handle_status_code(401, 'foobar')  
+          rescue => e
+            e.message.should eq('foobar')
+          end
+        end
       end
     end
 
@@ -223,7 +233,7 @@ describe Klarna::Checkout::Client do
     end
 
     it "checks the response" do
-      subject.should receive(:handle_status_code).with(200)
+      subject.should receive(:handle_status_code).with(200, JSON.generate({ id: "143F7BC0A1090B11C39E7220000" }))
       subject.read_order('143F7BC0A1090B11C39E7220000')
     end
   end
@@ -251,7 +261,7 @@ describe Klarna::Checkout::Client do
     end
 
     it "checks the response" do
-      subject.should receive(:handle_status_code).with(200)
+      subject.should receive(:handle_status_code).with(200, JSON.generate({ id: "143F7BC0A1090B11C39E7220000" }))
       subject.update_order(order)
     end
 
