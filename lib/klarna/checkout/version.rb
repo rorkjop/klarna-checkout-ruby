@@ -1,5 +1,5 @@
 module Klarna
   module Checkout
-    VERSION = "1.0.1"
+    VERSION = "1.1.0"
   end
 end
