@@ -31,6 +31,7 @@ module Klarna
           :purchase_currency  => @purchase_currency,
           :locale             => @locale,
           :cart     => @cart.as_json,
+          :gui      => @gui.as_json,
           :merchant => @merchant.as_json 
         })
       end

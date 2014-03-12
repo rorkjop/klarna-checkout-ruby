@@ -171,6 +171,9 @@ describe Klarna::Checkout::Order do
             tax_rate:   2500
           }]
         },
+        gui: {
+          layout: 'desktop'
+        },
         merchant: {
           id: '666666',
           terms_uri:        'http://www.example.com/terms',
@@ -214,6 +217,12 @@ describe Klarna::Checkout::Order do
       its([:checkout_uri])     { should eq 'http://www.example.com/checkout' }
       its([:confirmation_uri]) { should eq 'http://www.example.com/confirmation_uri' }
       its([:push_uri])         { should eq 'http://www.example.com/push' }
+    end
+
+    describe "gui" do
+      subject { json_hash[:gui] }
+
+      its([:layout]) { should eq 'desktop' }
     end
   end
 
