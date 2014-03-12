@@ -1,3 +1,7 @@
+## Version 1.1.1
+
+* Fix a bug where GUI options would not be passed to Klarna
+
 ## Version 1.1.0
 
 * Exceptions raised now include the response body
