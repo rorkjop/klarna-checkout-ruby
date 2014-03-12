@@ -1,3 +1,7 @@
+## Version 1.1.0
+
+* Exceptions raised now include the response body
+
 ## Version 1.0.1
 
 * Fix bug with assigning `[]` to `Cart#items`
