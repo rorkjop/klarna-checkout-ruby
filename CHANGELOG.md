@@ -1,3 +1,7 @@
+## Version 1.1.2
+
+* Fix a bug where GUI options were passed on persisted orders (not allowed)
+
 ## Version 1.1.1
 
 * Fix a bug where GUI options would not be passed to Klarna
