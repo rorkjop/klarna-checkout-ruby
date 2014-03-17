@@ -25,15 +25,22 @@ module Klarna
       validate :cart_validation
 
       def as_json
-        json_sanitize({
+        json = json_sanitize({
           :merchant_reference => (@merchant_reference && @merchant_reference.as_json),
           :purchase_country   => @purchase_country,
           :purchase_currency  => @purchase_currency,
           :locale             => @locale,
           :cart     => @cart.as_json,
-          :gui      => @gui.as_json,
+          :gui      => (@gui && @gui.as_json),
           :merchant => @merchant.as_json 
         })
+        if id || json[:gui].nil?
+          json.delete(:gui)
+        end
+        if id
+          json.delete(:merchant)
+        end
+        json
       end
 
       private

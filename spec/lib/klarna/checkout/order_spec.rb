@@ -188,6 +188,16 @@ describe Klarna::Checkout::Order do
       json_hash
     end
 
+    shared_examples_for "it's not included when order has ID" do
+      context "when 'id' is set" do
+        before(:each) do
+          order.id = 'foobar'
+        end
+
+        it { should be_nil }
+      end
+    end
+
     describe "merchant_reference" do
       subject { json_hash[:merchant_reference] }
 
@@ -217,12 +227,16 @@ describe Klarna::Checkout::Order do
       its([:checkout_uri])     { should eq 'http://www.example.com/checkout' }
       its([:confirmation_uri]) { should eq 'http://www.example.com/confirmation_uri' }
       its([:push_uri])         { should eq 'http://www.example.com/push' }
+
+      it_behaves_like "it's not included when order has ID"
     end
 
     describe "gui" do
       subject { json_hash[:gui] }
 
       its([:layout]) { should eq 'desktop' }
+
+      it_behaves_like "it's not included when order has ID"
     end
   end
 
