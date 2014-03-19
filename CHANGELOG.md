@@ -1,3 +1,7 @@
+## Version 1.1.3
+
+* Fix a bug where shipping address would not be passed to Klarna
+
 ## Version 1.1.2
 
 * Fix a bug where GUI options were passed on persisted orders (not allowed)
