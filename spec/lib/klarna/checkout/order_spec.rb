@@ -180,6 +180,14 @@ describe Klarna::Checkout::Order do
           checkout_uri:     'http://www.example.com/checkout',
           confirmation_uri: 'http://www.example.com/confirmation_uri',
           push_uri:         'http://www.example.com/push'
+        },
+        shipping_address: {
+          street_address: 'Example Street 1',
+          postal_code: '3045',
+          city: 'Drammen',
+          country: 'NO',
+          email: 'test@example.com',
+          phone: '99988777'
         }
     end
 
@@ -237,6 +245,17 @@ describe Klarna::Checkout::Order do
       its([:layout]) { should eq 'desktop' }
 
       it_behaves_like "it's not included when order has ID"
+    end
+
+    describe "shipping_address" do
+      subject { json_hash[:shipping_address] }
+
+      its([:street_address]) { should eq 'Example Street 1' }
+      its([:postal_code])    { should eq '3045' }
+      its([:city])           { should eq 'Drammen' }
+      its([:country])        { should eq 'NO' }
+      its([:email])          { should eq 'test@example.com' }
+      its([:phone])          { should eq '99988777' }
     end
   end
 
