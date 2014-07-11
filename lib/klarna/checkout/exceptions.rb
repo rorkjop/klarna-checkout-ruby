@@ -1,6 +1,9 @@
 class Klarna::Checkout::Exception < StandardError
 end
 
+class Klarna::Checkout::BadRequest < Klarna::Checkout::Exception
+end
+
 class Klarna::Checkout::UnauthorizedException < Klarna::Checkout::Exception
 end
 
