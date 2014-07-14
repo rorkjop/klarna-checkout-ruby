@@ -78,6 +78,8 @@ module Klarna
         case Integer(code)
         when 200, 201
           yield if block_given?
+        when 400
+          raise Klarna::Checkout::BadRequest.new(msg)
         when 401
           raise Klarna::Checkout::UnauthorizedException.new(msg)
         when 403
