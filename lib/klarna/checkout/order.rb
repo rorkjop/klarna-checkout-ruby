@@ -33,6 +33,7 @@ module Klarna
           :cart     => @cart.as_json,
           :gui      => (@gui && @gui.as_json),
           :merchant => @merchant.as_json,
+          :status   => status,
           :shipping_address => (@shipping_address && @shipping_address.as_json)
         })
         if id || json[:gui].nil?
@@ -40,6 +41,9 @@ module Klarna
         end
         if id
           json.delete(:merchant)
+        end
+        if status != 'created'
+          json.delete(:status)
         end
         json
       end

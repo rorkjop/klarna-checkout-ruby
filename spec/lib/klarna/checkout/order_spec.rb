@@ -257,6 +257,28 @@ describe Klarna::Checkout::Order do
       its([:email])          { should eq 'test@example.com' }
       its([:phone])          { should eq '99988777' }
     end
+
+    describe "status" do
+      subject { json_hash[:status] }
+
+      context "with status 'checkout_incomplete'" do
+        before { order.status = 'checkout_incomplete' }
+
+        it { should be_nil }
+      end
+
+      context "with status 'checkout_complete'" do
+        before { order.status = 'checkout_complete' }
+
+        it { should be_nil }
+      end
+
+      context "with status 'created'" do
+        before { order.status = 'created' }
+
+        it { should eq 'created' }
+      end
+    end
   end
 
   describe "#to_json" do
