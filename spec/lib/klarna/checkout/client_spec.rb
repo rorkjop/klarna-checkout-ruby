@@ -36,7 +36,7 @@ describe Klarna::Checkout::Client do
     it "doesn't allow arbitrary values" do
       expect {
         subject.environment = :foo
-      }.to raise_error
+      }.to raise_error(ArgumentError)
     end
 
     it "accepts strings" do

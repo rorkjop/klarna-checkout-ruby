@@ -25,7 +25,7 @@ module Klarna
       def environment=(new_env)
         new_env = new_env.to_sym
         unless VALID_ENVS.include?(new_env)
-          raise "Environment must be one of: #{VALID_ENVS.join(', ')}"
+          raise ArgumentError, "Environment must be one of: #{VALID_ENVS.join(', ')}"
         end
 
         @environment = new_env
@@ -47,7 +47,7 @@ module Klarna
         order
       end
 
-      def read_order(id) 
+      def read_order(id)
         response = https_connection.get do |req|
           req.url "/checkout/orders/#{id}"
 
