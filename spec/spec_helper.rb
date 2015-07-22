@@ -2,6 +2,7 @@ require 'klarna/checkout'
 
 require 'webmock/rspec'
 require 'vcr'
+require 'rspec/its'
 
 # require 'shoulda/matchers'
 

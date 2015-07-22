@@ -103,7 +103,7 @@ describe Klarna::Checkout::Client do
 
       it "returns a falsy value" do
         return_value = subject.create_order(order)
-        return_value.should be_false
+        return_value.should be_falsey
       end
     end
   end
@@ -115,7 +115,7 @@ describe Klarna::Checkout::Client do
         subject.handle_status_code 200 do
           yielded = true
         end
-        yielded.should be_true
+        yielded.should be_truthy
       end
 
       context "without block" do
@@ -133,7 +133,7 @@ describe Klarna::Checkout::Client do
         subject.handle_status_code 201 do
           yielded = true
         end
-        yielded.should be_true
+        yielded.should be_truthy
       end
 
       context "without block" do
@@ -145,17 +145,18 @@ describe Klarna::Checkout::Client do
       end
     end
 
+
     context "with 401" do
       it "raises a Klarna::Checkout::UnauthorizedException" do
         expect {
-          subject.handle_status_code(401)  
+          subject.handle_status_code(401)
         }.to raise_error(Klarna::Checkout::UnauthorizedException)
       end
 
       describe "handling status code with a message" do
         it "has a message" do
           begin
-            subject.handle_status_code(401, 'foobar')  
+            subject.handle_status_code(401, 'foobar')
           rescue => e
             e.message.should eq('foobar')
           end
@@ -166,7 +167,7 @@ describe Klarna::Checkout::Client do
     context "with 403" do
       it "raises a Klarna::Checkout::ForbiddenException" do
         expect {
-          subject.handle_status_code(403)  
+          subject.handle_status_code(403)
         }.to raise_error(Klarna::Checkout::ForbiddenException)
       end
     end
@@ -174,7 +175,7 @@ describe Klarna::Checkout::Client do
     context "with 404" do
       it "raises a Klarna::Checkout::NotFoundException" do
         expect {
-          subject.handle_status_code(404)  
+          subject.handle_status_code(404)
         }.to raise_error(Klarna::Checkout::NotFoundException)
       end
     end
@@ -182,7 +183,7 @@ describe Klarna::Checkout::Client do
     context "with 405" do
       it "raises a Klarna::Checkout::MethodNotAllowedException" do
         expect {
-          subject.handle_status_code(405)  
+          subject.handle_status_code(405)
         }.to raise_error(Klarna::Checkout::MethodNotAllowedException)
       end
     end
@@ -190,7 +191,7 @@ describe Klarna::Checkout::Client do
     context "with 406" do
       it "raises a Klarna::Checkout::NotAcceptableException" do
         expect {
-          subject.handle_status_code(406)  
+          subject.handle_status_code(406)
         }.to raise_error(Klarna::Checkout::NotAcceptableException)
       end
     end
@@ -198,7 +199,7 @@ describe Klarna::Checkout::Client do
     context "with 415" do
       it "raises a Klarna::Checkout::UnsupportedMediaTypeException" do
         expect {
-          subject.handle_status_code(415)  
+          subject.handle_status_code(415)
         }.to raise_error(Klarna::Checkout::UnsupportedMediaTypeException)
       end
     end
@@ -277,7 +278,7 @@ describe Klarna::Checkout::Client do
 
       it "returns a falsy value" do
         return_value = subject.update_order(order)
-        return_value.should be_false
+        return_value.should be_falsey
       end
     end
   end
