@@ -4,12 +4,12 @@ RSpec::Matchers.define :have_attribute do |attr_name| # , type|
   match do |subject|
     attr_name = attr_name.to_s
 
-    subject.should respond_to("#{attr_name}")
-    subject.should respond_to("#{attr_name}=")
+    expect(subject).to respond_to("#{attr_name}")
+    expect(subject).to respond_to("#{attr_name}=")
 
     # case type
     # when :readonly
-    #   # expect { 
+    #   # expect {
     #   subject.public_send("#{attr_name}=")
     #   # }.to raise_error(NoMethodError)
     # when :mandatory
@@ -23,7 +23,7 @@ RSpec::Matchers.define :have_attribute do |attr_name| # , type|
 
     # unless type == :readonly
     #   expect {
-    #     subject.public_send("#{attr_name}=", 'new_value')  
+    #     subject.public_send("#{attr_name}=", 'new_value')
     #   }.to change(subject, attr_name).to('new_value')
     # end
   end

@@ -23,14 +23,14 @@ describe Klarna::Checkout::Client do
       end
 
       it "shouldn't be necessary to provide the secret twice" do
-        described_class.new.shared_secret.should eq 'foobar'
+        expect(described_class.new.shared_secret).to eq 'foobar'
       end
     end
   end
 
   describe "#environment" do
     it "defaults to :test" do
-      subject.environment.should eq :test
+      expect(subject.environment).to eq :test
     end
 
     it "doesn't allow arbitrary values" do
@@ -41,10 +41,10 @@ describe Klarna::Checkout::Client do
 
     it "accepts strings" do
       subject.environment = 'test'
-      subject.environment.should eq :test
+      expect(subject.environment).to eq :test
 
       subject.environment = 'production'
-      subject.environment.should eq :production
+      expect(subject.environment).to eq :production
     end
   end
 
@@ -87,23 +87,23 @@ describe Klarna::Checkout::Client do
     end
 
     it "checks the response" do
-      subject.should receive(:handle_status_code).with(201, '')
+      expect(subject).to receive(:handle_status_code).with(201, '')
       subject.create_order(order)
     end
 
     it "returns the order" do
       return_value = subject.create_order(order)
-      return_value.should eq order
+      expect(return_value).to eq order
     end
 
     context "if the order is invalid" do
       before(:each) do
-        order.stub(:valid?) { false }
+        allow(order).to receive(:valid?) { false }
       end
 
       it "returns a falsy value" do
         return_value = subject.create_order(order)
-        return_value.should be_falsey
+        expect(return_value).to be_falsey
       end
     end
   end
@@ -115,7 +115,7 @@ describe Klarna::Checkout::Client do
         subject.handle_status_code 200 do
           yielded = true
         end
-        yielded.should be_truthy
+        expect(yielded).to be_truthy
       end
 
       context "without block" do
@@ -133,7 +133,7 @@ describe Klarna::Checkout::Client do
         subject.handle_status_code 201 do
           yielded = true
         end
-        yielded.should be_truthy
+        expect(yielded).to be_truthy
       end
 
       context "without block" do
@@ -158,7 +158,7 @@ describe Klarna::Checkout::Client do
           begin
             subject.handle_status_code(401, 'foobar')
           rescue => e
-            e.message.should eq('foobar')
+            expect(e.message).to eq('foobar')
           end
         end
       end
@@ -234,7 +234,7 @@ describe Klarna::Checkout::Client do
     end
 
     it "checks the response" do
-      subject.should receive(:handle_status_code).with(200, JSON.generate({ id: "143F7BC0A1090B11C39E7220000" }))
+      expect(subject).to receive(:handle_status_code).with(200, JSON.generate({ id: "143F7BC0A1090B11C39E7220000" }))
       subject.read_order('143F7BC0A1090B11C39E7220000')
     end
   end
@@ -262,23 +262,23 @@ describe Klarna::Checkout::Client do
     end
 
     it "checks the response" do
-      subject.should receive(:handle_status_code).with(200, JSON.generate({ id: "143F7BC0A1090B11C39E7220000" }))
+      expect(subject).to receive(:handle_status_code).with(200, JSON.generate({ id: "143F7BC0A1090B11C39E7220000" }))
       subject.update_order(order)
     end
 
     it "returns an order" do
       return_value = subject.update_order(order)
-      return_value.should be_kind_of(Klarna::Checkout::Order)
+      expect(return_value).to be_kind_of(Klarna::Checkout::Order)
     end
 
     context "if the order is invalid" do
       before(:each) do
-        order.stub(:valid?) { false }
+        allow(order).to receive(:valid?) { false }
       end
 
       it "returns a falsy value" do
         return_value = subject.update_order(order)
-        return_value.should be_falsey
+        expect(return_value).to be_falsey
       end
     end
   end

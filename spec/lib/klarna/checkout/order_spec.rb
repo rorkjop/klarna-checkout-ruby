@@ -74,71 +74,71 @@ describe Klarna::Checkout::Order do
 
       it "is invalid without a purchase country" do
         subject.purchase_country = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a purchase currency" do
         subject.purchase_currency = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a locale" do
         subject.locale = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       let(:cart_item) { subject.cart.items[0] }
 
       it "is invalid without a cart item reference" do
         cart_item.reference = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a cart item name" do
         cart_item.name = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a cart item quantity" do
         cart_item.quantity = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a cart item unit price" do
         cart_item.unit_price = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a cart item tax rate" do
         cart_item.tax_rate = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       let(:merchant) { subject.merchant }
 
       it "is invalid without a merchant id" do
         merchant.id = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a merchant terms_uri" do
         merchant.terms_uri = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a merchant checkout_uri" do
         merchant.checkout_uri = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a merchant confirmation_uri" do
         merchant.confirmation_uri = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it "is invalid without a merchant push_uri" do
         merchant.push_uri = nil
-        subject.should_not be_valid
+        expect(subject).to_not be_valid
       end
     end
 
@@ -283,11 +283,11 @@ describe Klarna::Checkout::Order do
 
   describe "#to_json" do
     it "bases it output on #as_json" do
-      subject.stub(:as_json) { { foo: "bar" } }
-      subject.to_json.should eq JSON.generate({ foo: "bar" })
+      allow(subject).to receive(:as_json) { { foo: "bar" } }
+      expect(subject.to_json).to eq JSON.generate({ foo: "bar" })
 
-      subject.stub(:as_json) { { bar: "foo" } }
-      subject.to_json.should eq JSON.generate({ bar: "foo" })
+      allow(subject).to receive(:as_json) { { bar: "foo" } }
+      expect(subject.to_json).to eq JSON.generate({ bar: "foo" })
     end
   end
 
@@ -308,13 +308,13 @@ describe Klarna::Checkout::Order do
 
       it "all new orders have the default values" do
         order = described_class.new
-        order.purchase_country.should eq  'NO'
-        order.purchase_currency.should eq 'NOK'
+        expect(order.purchase_country).to eq  'NO'
+        expect(order.purchase_currency).to eq 'NOK'
       end
 
       it "should be possible to override the default values" do
         order = described_class.new(purchase_currency: 'SEK')
-        order.purchase_currency.should eq 'SEK'
+        expect(order.purchase_currency).to eq 'SEK'
       end
 
       it "should be possible to provide any nested values without affecting the defaults" do
@@ -323,8 +323,8 @@ describe Klarna::Checkout::Order do
             terms_uri: 'http://www.example.com/terms'
           }
         })
-        order.merchant.id.should eq '666666'
-        order.merchant.terms_uri.should eq 'http://www.example.com/terms'
+        expect(order.merchant.id).to eq '666666'
+        expect(order.merchant.terms_uri).to eq 'http://www.example.com/terms'
       end
 
       context "when I override an already specified default value" do
@@ -336,20 +336,20 @@ describe Klarna::Checkout::Order do
 
         it "newly created objects should use the new default value" do
           order = described_class.new
-          order.purchase_currency.should eq 'SEK'
+          expect(order.purchase_currency).to eq 'SEK'
         end
 
         it "shouldn't remove the old default values" do
           order = described_class.new
-          order.purchase_country.should eq  'NO'
-          order.merchant.id.should eq '666666'
+          expect(order.purchase_country).to eq  'NO'
+          expect(order.merchant.id).to eq '666666'
         end
       end
     end
 
     it "doesn't allow setting something other than a hash" do
       expect {
-        described_class.defaults = :foobar  
+        described_class.defaults = :foobar
       }.to raise_error(ArgumentError)
     end
   end
@@ -369,9 +369,9 @@ describe Klarna::Checkout::Order do
 
     it "should use the configuration's default values" do
       order = described_class.new
-      order.purchase_country.should  eq 'NO'
-      order.purchase_currency.should eq 'NOK'
-      order.merchant.id.should       eq '424242'
+      expect(order.purchase_country).to  eq 'NO'
+      expect(order.purchase_currency).to eq 'NOK'
+      expect(order.merchant.id).to       eq '424242'
     end
 
     context "if I specify another default merchant ID" do
@@ -387,10 +387,10 @@ describe Klarna::Checkout::Order do
 
       it "should use my default values instead" do
         order = described_class.new
-        order.purchase_country.should  eq 'SE'
-        order.purchase_currency.should eq 'SEK'
-        order.merchant.id.should       eq '666666'
+        expect(order.purchase_country).to  eq 'SE'
+        expect(order.purchase_currency).to eq 'SEK'
+        expect(order.merchant.id).to       eq '666666'
       end
     end
-  end 
+  end
 end
