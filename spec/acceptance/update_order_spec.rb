@@ -32,8 +32,8 @@ describe "updating existing order" do
           end
         end
 
-        specify { subject.merchant_reference.orderid1.should eq 'newreference' }
-        specify { subject.cart.items[0].quantity.should eq 50 }
+        specify { expect(subject.merchant_reference.orderid1).to eq 'newreference' }
+        specify { expect(subject.cart.items[0].quantity).to eq 50 }
       end
     end
   end
