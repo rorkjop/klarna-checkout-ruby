@@ -38,7 +38,8 @@ describe Klarna::Checkout::Cart do
           total_tax_amount: 50,
           total_price_including_tax: 250,
           discount_rate: 0,
-          tax_rate: 2500
+          tax_rate: 2500,
+          merchant_item_data: 'size=L;'
         }]
     end
 
@@ -50,16 +51,17 @@ describe Klarna::Checkout::Cart do
     describe "items/0" do
       subject { json_hash[:items][0] }
 
-      its([:type])                      { should eq 'physical' }          
-      its([:ean])                       { should eq '1123581220325' }        
-      its([:reference])                 { should eq '1123581220325' }              
-      its([:name])                      { should eq 'Widget' }          
-      its([:uri])                       { should eq 'http://www.example.com/product-uri' }        
-      its([:image_uri])                 { should eq 'http://www.example.com/product-image-uri' }              
-      its([:quantity])                  { should eq 1 }              
-      its([:unit_price])                { should eq 250 }                
+      its([:type])                      { should eq 'physical' }
+      its([:ean])                       { should eq '1123581220325' }
+      its([:reference])                 { should eq '1123581220325' }
+      its([:name])                      { should eq 'Widget' }
+      its([:uri])                       { should eq 'http://www.example.com/product-uri' }
+      its([:image_uri])                 { should eq 'http://www.example.com/product-image-uri' }
+      its([:quantity])                  { should eq 1 }
+      its([:unit_price])                { should eq 250 }
       its([:discount_rate])             { should eq 0 }
       its([:tax_rate])                  { should eq 2500 }
+      its([:merchant_item_data])        { should eq 'size=L;' }
     end
   end
 end

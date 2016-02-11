@@ -8,7 +8,7 @@ module Klarna
 
       attr_accessor :id, :status, :reference, :reservation, :started_at,
                     :completed_at, :created_at, :last_modified_at, :expires_at,
-                    :locale
+                    :locale, :merchant_order_data
 
       attr_accessor :purchase_country, :purchase_currency
 
@@ -30,6 +30,7 @@ module Klarna
           :purchase_country   => @purchase_country,
           :purchase_currency  => @purchase_currency,
           :locale             => @locale,
+          :merchant_order_data => @merchant_order_data,
           :cart     => @cart.as_json,
           :gui      => (@gui && @gui.as_json),
           :merchant => @merchant.as_json,
