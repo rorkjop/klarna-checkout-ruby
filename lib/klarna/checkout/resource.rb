@@ -24,7 +24,7 @@ module Klarna
       end
 
       def json_sanitize(hash, keys = [])
-        hash.reject! { |k, v| v.nil? }
+        hash.reject! { |_, v| v.nil? }
         hash.slice!(*Array(keys)) if keys.any?
         hash
       end

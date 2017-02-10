@@ -74,7 +74,7 @@ module Klarna
         Digest::SHA256.base64digest(payload)
       end
 
-      def handle_status_code(code, msg = nil, &blk)
+      def handle_status_code(code, msg = nil)
         case Integer(code)
           when 200, 201
             yield if block_given?

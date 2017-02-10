@@ -11,7 +11,7 @@ module Klarna
         end
       end
 
-      def configure(&blk)
+      def configure
         yield(self)
       end
 
