@@ -47,6 +47,7 @@ describe Klarna::Checkout::Order do
         purchase_country:   'NO',
         purchase_currency:  'NOK',
         locale: 'nb-no',
+        merchant_order_data: 'ref=test;',
         cart: {
           items: [{
             reference:  '1123581220325',
