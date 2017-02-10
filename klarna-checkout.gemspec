@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["theodor@tonum.no"]
   spec.description   = %q{Ruby Wrapper for Klarna Checkout Rest API}
   spec.summary       = %q{...}
-  spec.homepage      = "https://github.com/Skalar/klarna-checkout-ruby"
+  spec.homepage      = "https://github.com/rorkjop/klarna-checkout-ruby"
   spec.license       = "MIT"
 
   spec.files         = Dir['LICENSE.txt', 'README.md', 'lib/**/*']
