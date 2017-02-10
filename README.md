@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/rorkjop/klarna-checkout-ruby.svg?branch=master)](https://travis-ci.org/rorkjop/klarna-checkout-ruby)
 [![Code Climate](https://codeclimate.com/github/rorkjop/klarna-checkout-ruby/badges/gpa.svg)](https://codeclimate.com/github/rorkjop/klarna-checkout-ruby)
 [![Test Coverage](https://codeclimate.com/github/rorkjop/klarna-checkout-ruby/badges/coverage.svg)](https://codeclimate.com/github/rorkjop/klarna-checkout-ruby/coverage)
 [![Gem Version](https://badge.fury.io/rb/klarna-checkout.png)](http://badge.fury.io/rb/klarna-checkout)
