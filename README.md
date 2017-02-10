@@ -84,7 +84,7 @@ Klarna::Checkout.configure do |config|
 end
 
 
-# Instead of repeating yourself with supplying the same attributes for each 
+# Instead of repeating yourself with supplying the same attributes for each
 # order you can configure some default attributes
 Klarna::Checkout::Order.defaults = {
   purchase_country: 'NO',
