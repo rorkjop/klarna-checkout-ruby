@@ -1,10 +1,11 @@
-require 'klarna/checkout'
+require 'simplecov'
+SimpleCov.start { add_filter "/spec" }
 
 require 'webmock/rspec'
 require 'vcr'
 require 'rspec/its'
 
-# require 'shoulda/matchers'
+require 'klarna/checkout'
 
 VCR.configure do |c|
   c.cassette_library_dir = File.expand_path("../fixtures/vcr_cassettes", __FILE__)
