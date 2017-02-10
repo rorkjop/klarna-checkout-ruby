@@ -13,7 +13,7 @@ module Klarna
 
       def initialize(args = {})
         self.class.defaults.deep_merge(args).each_pair do |attr, value|
-          setter = "#{attr.to_s}="
+          setter = "#{attr}="
           self.send(setter, value) if respond_to?(setter)
         end
       end

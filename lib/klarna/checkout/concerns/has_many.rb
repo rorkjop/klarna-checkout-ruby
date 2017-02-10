@@ -18,7 +18,7 @@ module HasMany
         new_value = new_value.map { |hash| klass.new(hash) }
         instance_variable_set(inst_var, new_value)
       else
-        raise "Unsupported type for relation #{association}: #{new_value.first.class.to_s}"
+        raise "Unsupported type for relation #{association}: #{new_value.first.class}"
       end
     end
   end

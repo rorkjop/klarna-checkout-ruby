@@ -10,7 +10,7 @@ module HasOne
       when Hash
         instance_variable_set(inst_var, klass.new(new_value))
       else
-        raise "Unsupported type for relation #{association}: #{new_value.class.to_s}"
+        raise "Unsupported type for relation #{association}: #{new_value.class}"
       end
     end
   end
