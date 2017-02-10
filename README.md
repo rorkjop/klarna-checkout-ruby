@@ -1,4 +1,6 @@
-[ ![Codeship Status for Skalar/klarna-checkout-ruby](https://www.codeship.io/projects/c01f6250-8b2d-0131-29ef-223e3dbeac7e/status?branch=master)](https://www.codeship.io/projects/15721) [![Code Climate](https://codeclimate.com/github/Skalar/klarna-checkout-ruby.png)](https://codeclimate.com/github/Skalar/klarna-checkout-ruby) [![Gem Version](https://badge.fury.io/rb/klarna-checkout.png)](http://badge.fury.io/rb/klarna-checkout)
+[![Code Climate](https://codeclimate.com/github/rorkjop/klarna-checkout-ruby/badges/gpa.svg)](https://codeclimate.com/github/rorkjop/klarna-checkout-ruby)
+[![Test Coverage](https://codeclimate.com/github/rorkjop/klarna-checkout-ruby/badges/coverage.svg)](https://codeclimate.com/github/rorkjop/klarna-checkout-ruby/coverage)
+[![Gem Version](https://badge.fury.io/rb/klarna-checkout.png)](http://badge.fury.io/rb/klarna-checkout)
 
 # Klarna Checkout
 
