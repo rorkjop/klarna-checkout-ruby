@@ -13,6 +13,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/rorkjop/klarna-checkout-ruby"
   spec.license       = "MIT"
 
+  spec.required_ruby_version = '~> 2.2'
+
   spec.files         = Dir['LICENSE.txt', 'README.md', 'lib/**/*']
   spec.test_files    = Dir['spec/**/*']
   spec.require_paths = ["lib"]
