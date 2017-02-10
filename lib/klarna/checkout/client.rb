@@ -76,24 +76,24 @@ module Klarna
 
       def handle_status_code(code, msg = nil, &blk)
         case Integer(code)
-        when 200, 201
-          yield if block_given?
-        when 400
-          raise Klarna::Checkout::BadRequest.new(msg)
-        when 401
-          raise Klarna::Checkout::UnauthorizedException.new(msg)
-        when 403
-          raise Klarna::Checkout::ForbiddenException.new(msg)
-        when 404
-          raise Klarna::Checkout::NotFoundException.new(msg)
-        when 405
-          raise Klarna::Checkout::MethodNotAllowedException.new(msg)
-        when 406
-          raise Klarna::Checkout::NotAcceptableException.new(msg)
-        when 415
-          raise Klarna::Checkout::UnsupportedMediaTypeException.new(msg)
-        when 500
-          raise Klarna::Checkout::InternalServerErrorException.new(msg)
+          when 200, 201
+            yield if block_given?
+          when 400
+            raise Klarna::Checkout::BadRequest.new(msg)
+          when 401
+            raise Klarna::Checkout::UnauthorizedException.new(msg)
+          when 403
+            raise Klarna::Checkout::ForbiddenException.new(msg)
+          when 404
+            raise Klarna::Checkout::NotFoundException.new(msg)
+          when 405
+            raise Klarna::Checkout::MethodNotAllowedException.new(msg)
+          when 406
+            raise Klarna::Checkout::NotAcceptableException.new(msg)
+          when 415
+            raise Klarna::Checkout::UnsupportedMediaTypeException.new(msg)
+          when 500
+            raise Klarna::Checkout::InternalServerErrorException.new(msg)
         end
       end
 

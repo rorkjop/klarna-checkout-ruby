@@ -27,14 +27,14 @@ module Klarna
       def as_json
         json = json_sanitize({
           :merchant_reference => (@merchant_reference && @merchant_reference.as_json),
-          :purchase_country   => @purchase_country,
-          :purchase_currency  => @purchase_currency,
-          :locale             => @locale,
+          :purchase_country => @purchase_country,
+          :purchase_currency => @purchase_currency,
+          :locale => @locale,
           :merchant_order_data => @merchant_order_data,
-          :cart     => @cart.as_json,
-          :gui      => (@gui && @gui.as_json),
+          :cart => @cart.as_json,
+          :gui => (@gui && @gui.as_json),
           :merchant => @merchant.as_json,
-          :status   => status,
+          :status => status,
           :shipping_address => (@shipping_address && @shipping_address.as_json)
         })
         if id || json[:gui].nil?
