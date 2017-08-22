@@ -119,7 +119,9 @@ module Klarna
       end
 
       def https_connection
-        @https_connection ||= Faraday.new(url: host)
+        @https_connection ||= Faraday.new(url: host, ssl: { verify: true }) do |faraday|
+          faraday.response :logger
+        end
       end
     end
   end
