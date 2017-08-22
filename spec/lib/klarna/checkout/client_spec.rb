@@ -77,8 +77,7 @@ describe Klarna::Checkout::Client do
 
       assert_requested :post, "https://checkout.testdrive.klarna.com/checkout/orders",
         :headers => {
-          # TODO: Investigate double definition in header
-          # 'Accept' => 'application/vnd.klarna.checkout.aggregated-order-v2+json',
+          'Accept' => 'application/vnd.klarna.checkout.aggregated-order-v2+json',
           'Authorization'  => 'Klarna dM+worqeBUs4UrOB3Jr/jSZWI39vP4LNw7NfDjGtW2w=',
           'Content-Type'   => 'application/vnd.klarna.checkout.aggregated-order-v2+json',
         },
