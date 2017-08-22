@@ -108,7 +108,7 @@ module Klarna
           req.url path
 
           req.headers['Authorization']   = "Klarna #{sign_payload(request_body)}"
-          req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json',
+          req.headers['Accept']          = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
           req.headers['Content-Type']    = 'application/vnd.klarna.checkout.aggregated-order-v2+json'
           req.headers['Accept-Encoding'] = ''
 
