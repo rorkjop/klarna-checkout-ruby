@@ -35,6 +35,7 @@ describe Klarna::Checkout::Order do
     it { should have_one(:customer,           as: Klarna::Checkout::Customer) }
     it { should have_one(:merchant,           as: Klarna::Checkout::Merchant) }
     it { should have_one(:gui,                as: Klarna::Checkout::Gui) }
+    it { should have_one(:options,            as: Klarna::Checkout::Options) }
   end
 
   describe "validations" do
@@ -189,6 +190,17 @@ describe Klarna::Checkout::Order do
           country: 'NO',
           email: 'test@example.com',
           phone: '99988777'
+        },
+        options: {
+          allow_separate_shipping_address: true,
+          color_button: '#FEA65A',
+          color_button_text: '#FFFFFF',
+          color_checkbox: '#FEA65A',
+          color_checkbox_checkmark: '#FFFFFF',
+          color_header: '#FEA65A',
+          color_link: '#FEA65A',
+          date_of_birth_mandatory: true,
+          shipping_details: 'Delivered within 1-3 working days'
         }
     end
 
@@ -257,6 +269,20 @@ describe Klarna::Checkout::Order do
       its([:country])        { should eq 'NO' }
       its([:email])          { should eq 'test@example.com' }
       its([:phone])          { should eq '99988777' }
+    end
+
+    describe "options" do
+      subject { json_hash[:options] }
+
+      its([:allow_separate_shipping_address]) { should eq true }
+      its([:color_button])                    { should eq '#FEA65A' }
+      its([:color_button_text])               { should eq '#FFFFFF' }
+      its([:color_checkbox])                  { should eq '#FEA65A' }
+      its([:color_checkbox_checkmark])        { should eq '#FFFFFF' }
+      its([:color_header])                    { should eq '#FEA65A' }
+      its([:color_link])                      { should eq '#FEA65A' }
+      its([:date_of_birth_mandatory])         { should eq true }
+      its([:shipping_details])                { should eq 'Delivered within 1-3 working days' }
     end
 
     describe "status" do
